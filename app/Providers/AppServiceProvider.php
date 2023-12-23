@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
-use Filament\Facades\Filament;
-use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\View\Components\Modal;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 use Filament\Tables;
@@ -24,11 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
-            $switch
-                ->locales(['en','nl']); // also accepts a closure
-        });
-
-        //dd(FilamentAsset::getScripts());
+        Model::unguard();
     }
 }
