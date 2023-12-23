@@ -26,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
             $switch
                 ->locales(['en','nl']); // also accepts a closure
         });
+
     }
 }
