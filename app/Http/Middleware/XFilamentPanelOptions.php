@@ -7,6 +7,7 @@ use Filament\Support\Enums\FontFamily;
 use Illuminate\Http\Request;
 use Filament\Infolists;
 use Filament\Forms;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;use Filament\Tables;
 
 class XFilamentPanelOptions
@@ -18,7 +19,7 @@ class XFilamentPanelOptions
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $LocalOptions = $this->getLocalOptions();
+        $LocalOptions = $this->getLocalOptions($request);
 
         /**
          * Configure default table and component options
@@ -76,9 +77,13 @@ class XFilamentPanelOptions
         return $next($request);
     }
 
-    private function getLocalOptions(): array
+    private function getLocalOptions($request): array
     {
-        $currentLocale = app()->getLocale();
+        $currentLocale = session()->get('locale')
+            ?? $request->get('locale')
+            ?? $request->cookie('filament_language_switch_locale')
+            ?? $this->getBrowserLocale($request)
+            ?? config('app.locale', 'en');
 
         $defaultOptions = [
             'defaultCurrency' => 'eur',
@@ -97,6 +102,19 @@ class XFilamentPanelOptions
             'defaultDateTimeWithSecondsDisplayFormat' => 'j M Y H:i:s',
         ];
 
+        Log::info('$currentLocale : ' . $currentLocale);
+        Log::debug('options : ', $currentLocale == 'nl' ? $nlLocaleOptions : $defaultOptions);
         return $currentLocale == 'nl' ? $nlLocaleOptions : $defaultOptions;
+    }
+
+    private function getBrowserLocale(Request $request): ?string
+    {
+        $userLangs = preg_split('/[,;]/', $request->server('HTTP_ACCEPT_LANGUAGE'));
+
+        foreach ($userLangs as $locale) {
+            return in_array($locale, LanguageSwitch::make()->getLocales())
+                ? $locale
+                : null;
+        }
     }
 }
