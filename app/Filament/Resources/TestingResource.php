@@ -28,8 +28,10 @@ class TestingResource extends Resource
                 Forms\Components\Select::make('company')
                     ->allowHtml()
                     ->options([
-                        1 => '<strong>Test Strong</strong>',
-                        2 => '<i>Test Cursive</i>'
+                        'tailwind' => '<span class="text-blue-500">Tailwind</span>',
+                        'alpine' => '<span class="text-green-500">Alpine</span>',
+                        'laravel' => '<span class="text-red-500">Laravel</span>',
+                        'livewire' => '<span class="text-pink-500">Livewire</span>',
                     ])
                     ->dehydrated(false)
                     ->required(),
