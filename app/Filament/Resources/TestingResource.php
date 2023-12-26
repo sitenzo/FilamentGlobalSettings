@@ -25,6 +25,14 @@ class TestingResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('company')
                     ->required(),
+                Forms\Components\Select::make('company')
+                    ->allowHtml()
+                    ->options([
+                        1 => '<strong>Test Strong</strong>',
+                        2 => '<i>Test Cursive</i>'
+                    ])
+                    ->dehydrated(false)
+                    ->required(),
             ]);
     }
 
@@ -33,11 +41,18 @@ class TestingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('username')
+                    ->icon('heroicon-o-envelope')
+                    ->copyable()
+                    ->copyMessage('company copied')
+                    ->copyMessageDuration(1500)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('date')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('Test')
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
