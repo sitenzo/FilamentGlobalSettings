@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "filament/filament": "^3.1",
+        "filament/filament": "v3.1.29",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
@@ -24,6 +24,12 @@
         "phpunit/phpunit": "^10.1",
         "spatie/laravel-ignition": "^2.0"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://filament.privato.pub/composer"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

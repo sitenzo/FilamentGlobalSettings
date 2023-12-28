@@ -25,16 +25,6 @@ class TestingResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('company')
                     ->required(),
-                Forms\Components\Select::make('company')
-                    ->allowHtml()
-                    ->options([
-                        'tailwind' => '<span class="text-blue-500">Tailwind</span>',
-                        'alpine' => '<span class="text-green-500">Alpine</span>',
-                        'laravel' => '<span class="text-red-500">Laravel</span>',
-                        'livewire' => '<span class="text-pink-500">Livewire</span>',
-                    ])
-                    ->dehydrated(false)
-                    ->required(),
             ]);
     }
 
